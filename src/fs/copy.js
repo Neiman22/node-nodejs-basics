@@ -9,14 +9,14 @@ const copy = async () => {
 
   try {
     await cp(src, dest, { recursive: true, force: false, errorOnExist: true });
-    console.log('Folder copied');
+    console.log('Folder "files" copied to "files_copy"');
   } catch (err) {
     if (err.code === 'ENOENT') {
-      console.error(`FS operation failed: no such directory`);
-    } if (err.code === 'ERR_FS_CP_EEXIST') {
-      console.error(`FS operation failed: folder already exists`);
+      throw new Error('FS operation failed: "files" folder does not exist');
+    } else if (err.code === 'ERR_FS_CP_EEXIST') {
+      throw new Error('FS operation failed: "files_copy" folder already exists');
     } else {
-      throw err;
+      console.error('Error:', err.message);
     }
   }
 };
