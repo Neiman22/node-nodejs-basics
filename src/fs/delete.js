@@ -1,20 +1,15 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
-import fsPromises from 'fs/promises';
+import { rm } from 'fs/promises';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const fileName = path.join(__dirname, 'files', 'fileToRemove.txt');
 
 const remove = async () => {
-  const __dirname = path.dirname(fileURLToPath(import.meta.url));
-  const fileName = path.join(__dirname, 'files', 'fileToRemove.txt');
-  
   try {
-    await fsPromises.rm(fileName);
-    console.log('File "fileToRemove.txt" removed');
+    await rm(fileName);
   } catch (err) {
-    if (err.code === 'ENOENT') {
-      throw new Error('FS operation failed: "fileToRemove.txt" file does not exist');
-    } else {
-      console.error(err.message);
-    };
+    throw new Error('FS operation failed');
   }
 };
 

@@ -1,21 +1,16 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
-import fsPromises from 'fs/promises';
+import { readdir } from 'fs/promises';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const dirName = path.join(__dirname, 'files');
 
 const list = async () => {
-  const __dirname = path.dirname(fileURLToPath(import.meta.url));
-  const dirName = path.join(__dirname, 'files');
-  
   try {
-    const files = await fsPromises.readdir(dirName);
-    console.log('Files in "files" folder:');
-    files.map(file => console.log(file));
+    const fileList = await readdir(dirName);
+    console.log(fileList);
   } catch (err) {
-    if (err.code === 'ENOENT') {
-      throw new Error('FS operation failed: "files" folder does not exist');
-    } else {
-      console.error(err.message);
-    };
+    throw new Error('FS operation failed');
   }
 };
 
