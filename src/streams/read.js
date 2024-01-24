@@ -1,4 +1,4 @@
-import { createReadStream, createWriteStream } from 'fs';
+import { createReadStream } from 'fs';
 import { dirname, join} from 'path';
 import { fileURLToPath } from 'url';
 import { stdout } from 'process';
