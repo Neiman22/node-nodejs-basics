@@ -9,7 +9,7 @@ const numberCPU = availableParallelism();
 
 const performCalculations = async () => {
   const workers = Array.from({ length: numberCPU }, (_, i) => {
-    const worker = new Worker(workerPath, { workerData: i + 10});
+    const worker = new Worker(workerPath, { workerData: i + 10 });
     return new Promise((res) => worker.on('message', (msg) => res(msg)));
   });
   const result = await Promise.all(workers);
